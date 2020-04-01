@@ -16,14 +16,21 @@ if test x"$1" = x; then
   infile="/tmp/testrun.sum"
 else
   outfile=${1//\.sum.*/.xml}
-  infile=$1
+  infile="$1"
 fi
 
 # Where to put the output file
 if test x"$2" = x; then
   outfile=${outfile}
 else
-  outfile="/tmp/${outfile}"
+  outfile="$2"
+fi
+
+# Set a test name
+if test x"$3" = x; then
+  testsuitename="DejaGnu"
+else
+  testsuitename="$3"
 fi
 
 if test ! -e "$infile"; then
@@ -59,7 +66,7 @@ cat <<EOF > "$outfile"
 <?xml version="1.0"?>
 
 <testsuites>
-<testsuite name="DejaGnu" tests="${total}" failures="${failures}" skipped="${skipped}">
+<testsuite name="${testsuitename}" tests="${total}" failures="${failures}" skipped="${skipped}">
 
 EOF
 
@@ -77,7 +84,7 @@ do
     name=$(echo "$line" | cut -d ' ' -f 2)
     message=$(echo "$line" | cut -d ' ' -f 3-50 | tr -d '\"><;:\[\]^\\&?@')
 
-    echo "    <testcase name=\"${name}\" classname=\"${tool}-${result}\">" >> "$outfile"
+    echo "    <testcase name=\"${name}\" classname=\"${testsuitename}.${tool}-${result}\">" >> "$outfile"
     case "${result}" in
 	UNSUPPORTED|UNTESTED|UNRESOLVED)
 	    if test x"${message}" != x; then
