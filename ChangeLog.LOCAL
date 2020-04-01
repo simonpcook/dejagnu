@@ -1,4 +1,9 @@
 2020-04-01  Simon Cook  <simon.cook@embecosm.com>
 
+	* contrib/log2junit.sh: Added.
+	* contrib/sum2junit.sh: Added.
+
+2020-04-01  Simon Cook  <simon.cook@embecosm.com>
+
 	* contrib/sum2junit.sh: Fix output path handling, add custom
 	testsuite name support.
